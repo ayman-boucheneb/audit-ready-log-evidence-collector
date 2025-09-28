@@ -35,16 +35,23 @@ with open (csv_file_path, mode='w', newline='') as file:
 
     try:
         with open(log_file, "r", encoding="utf-8", errors="replace") as f:
+            total_lines = 0
+            parsed_ok = 0
+            parse_errors = 0
             for line in f:
                 line = line.strip()
+                total_lines +=1
+
                 if not line:
                     continue  # skip blank lines
 
                 m = log_pattern.match(line)
                 if not m:
+                    parse_errors +=1
                     # couldn't parse this line → skip or count an error
                     continue
-
+                
+                parsed_ok +=1
                 timestamp   = m.group(4)
                 source_ip   = m.group(1)
                 method      = m.group(5)
@@ -64,6 +71,7 @@ with open (csv_file_path, mode='w', newline='') as file:
                     'Bytes':       byte_count,
                     'User Agent':  user_agent
                 })
+            print(f"Total Lines={total_lines}, Successful Parses={parsed_ok}, Unsuccessful Parses={parse_errors}")    
     except FileNotFoundError:
         print("The file you're trying to access doesn't exist:", log_file)
 
