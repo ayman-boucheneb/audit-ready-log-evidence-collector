@@ -91,6 +91,8 @@ with open (csv_file_path, mode='w', newline='', encoding='utf-8') as file:
 
     except FileNotFoundError:
         print("The file you're trying to access doesn't exist:", log_file)
+
+        
 print("Top 10 IPs:")
 for ip, cnt in ip_counts.most_common(10):
     print(f"  {ip:>15}  {cnt}")
