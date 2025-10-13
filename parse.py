@@ -152,5 +152,42 @@ with open(alerts_csv, "w", newline="", encoding="utf-8") as out:
     w.writerow(["timestamp", "ip", "event_type", "severity", "details"])
     w.writerows(alerts)
 
-print(f"Wrote {summary_csv}")
+
+
+
+print("Traffic Summary")
+# Top 10 IPs
+print("\nTop 10 IPs by request volume:")
+for ip, count in ip_counts.most_common(10):
+    print(f"  {ip:<20} {count:>5}")
+# Status code distribution
+print("\nHTTP Status Code Totals:")
+for status_code, count in sorted(status_counts.items()):
+    print(f"  {status_code:<5} {count:>5}")
+# Top 10 requested paths
+print("\nTop 10 Requested Paths:")
+for path, count in path_counts.most_common(10):
+    print(f"  {path:<30} {count:>5}")
+
+
+
+print("Alerts")
+# Count alerts by type
+alert_type_counts = Counter([alert[2] for alert in alerts])
+print("\nAlert counts by type:")
+for alert_type, count in alert_type_counts.items():
+    print(f"  {alert_type:<20} {count:>5}")
+# Top 5 HighFrequency IPs
+print("\nTop 5 HighFrequency IPs:")
+for alert in [alert for alert in alerts if alert[2] == "HighFrequency"][:5]:
+    print(f"  {alert[1]:<20} {alert[4]}")
+# Top 5 FailedLoginBurst IPs
+print("\nTop 5 FailedLoginBurst IPs:")
+for alert in [alert for alert in alerts if alert[2] == "FailedLoginBurst"][:5]:
+    print(f"  {alert[1]:<20} {alert[4]}")
+# Top 5 SensitivePathProbe IPs
+print("\nTop 5 SensitivePathProbe IPs:")
+for alert in [alert for alert in alerts if alert[2] == "SensitivePathProbe"][:5]:
+    print(f"  {alert[1]:<20} {alert[4]}")
+print(f"\nWrote {summary_csv}")
 print(f"Wrote {alerts_csv} ({len(alerts)} alerts)")
