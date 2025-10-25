@@ -23,5 +23,6 @@ This project is an **audit & security monitoring task**. It focuses on analysing
     - `alerts.csv` - contains the detection alerts produced from suspicious activity
 - `/docs`: folder containing project documentation
     - `Individual Report for Project.docx` - personal report with reflections and findings
+    - `Log Parser Report.docx` - report about findings of the pased logs
     - `project-notes.ipynb` - personal notes taken throughout the project
 - `parse.py`: python script used to parse the log file and generate outputs
